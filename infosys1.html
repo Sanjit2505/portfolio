@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infosys Module I — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Bebas+Neue&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+:root { --bg: #0d0e10; --card: #111214; --border: #4f5052; --ink: #f8fafa; --ink2: #c5c6c8; --accent: #8b1a2f; }
+body { background: var(--bg); color: var(--ink); font-family: 'Jost', sans-serif; margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; }
+.page-bg { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 50%, rgba(139, 26, 47, 0.05), transparent); }
+nav { padding: 2rem 4rem; display: flex; align-items: center; }
+.back-btn { color: var(--ink2); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.2rem; text-transform: uppercase; transition: color 0.3s; }
+.back-btn:hover { color: var(--accent); }
+.content { max-width: 1200px; margin: 4rem auto; padding: 0 4rem; display: grid; grid-template-columns: 1.5fr 1fr; gap: 4rem; align-items: start; }
+.img-wrap { background: #000; padding: 1rem; border: 1px solid var(--border); box-shadow: 0 50px 100px rgba(0,0,0,0.5); }
+.img-wrap img { width: 100%; height: auto; display: block; }
+.info h1 { font-family: 'Cormorant', serif; font-size: 4rem; font-style: italic; line-height: 1.1; margin-bottom: 2rem; }
+.issuer { color: var(--accent); letter-spacing: 0.3rem; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 1rem; display: block; }
+.desc { font-size: 1.1rem; line-height: 1.8; color: var(--ink2); margin-bottom: 3rem; font-weight: 300; }
+.meta { border-top: 1px solid var(--border); padding-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.meta-item span { display: block; font-size: 0.7rem; text-transform: uppercase; color: #666; letter-spacing: 0.1rem; margin-bottom: 0.5rem; }
+.meta-item p { font-size: 1rem; }
+.actions { margin-top: 4rem; display: flex; gap: 1rem; }
+.btn { padding: 1rem 2rem; border: 1px solid var(--border); color: var(--ink); text-decoration: none; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.2rem; transition: all 0.3s; }
+.btn.primary { background: var(--accent); border-color: var(--accent); }
+.btn:hover { transform: translateY(-5px); border-color: var(--ink); }
+@media (max-width: 900px) { .content { grid-template-columns: 1fr; padding: 0 2rem; } nav { padding: 2rem; } .info h1 { font-size: 2.5rem; } }
+</style>
+</head>
+<body>
+<div class="page-bg"></div>
+<nav><a href="../certificates.html" class="back-btn">← Back to Gallery</a></nav>
+<main class="content">
+  <div class="img-wrap">
+    <img src="../infosys c1.png" alt="Infosys Module I">
+  </div>
+  <div class="info">
+    <span class="issuer">Infosys Springboard</span>
+    <h1>Core Competencies Module I</h1>
+    <p class="desc">The first phase of the Infosys Springboard certification, focusing on foundational software engineering methodologies, agile practices, and corporate technical standards. This module sets the baseline for professional development within the Infosys ecosystem.</p>
+    <div class="meta">
+      <div class="meta-item"><span>Date Issued</span><p>Mar 2025</p></div>
+      <div class="meta-item"><span>Reference ID</span><p>INFY-SP-M1-882</p></div>
+    </div>
+    <div class="actions">
+      <a href="#" class="btn primary">Verify Credential</a>
+      <a href="../infosys c1.png" download class="btn">Download Image</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

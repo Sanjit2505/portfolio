@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding Profiles - Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Bebas+Neue&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg:        #0d0e10;
+  --bg2:       #282728;
+  --card:      #111214;
+  --border:    #4f5052;
+  --border2:   #818283;
+  --ink:       #f8fafa;
+  --ink2:      #c5c6c8;
+  --ink3:      #a0a0a0;
+  --ink4:      #818283;
+  --highlight: #1a1b1d;
+  --accent:    #8b1a2f;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;}
+body{
+  background: var(--bg); color:var(--ink); font-family:'Jost',sans-serif;
+  font-weight:300; min-height:100vh; overflow-x:hidden;
+}
+
+/* BACKGROUND GLOW */
+.page-bg {
+  position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  background:
+    radial-gradient(ellipse 70% 90% at 70% 50%, rgba(139, 26, 47, .05) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 70% at 20% 80%, rgba(139, 26, 47, .03) 0%, transparent 60%);
+  background-color: var(--bg);
+}
+.noise {
+  position: fixed; inset: 0; opacity: .04; pointer-events: none; z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 2rem 4rem; background: linear-gradient(to bottom, rgba(13, 14, 16, .9), transparent);
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: .15em;
+  color: var(--ink); text-decoration: none; text-transform: uppercase;
+}
+.nav-links {
+  display: flex; gap: 3rem; list-style: none;
+}
+.nav-links a {
+  color: var(--ink2); text-decoration: none; font-size: .85rem;
+  letter-spacing: .2em; text-transform: uppercase; transition: color .3s;
+}
+.nav-links a:hover {
+  color: var(--accent);
+}
+
+/* PAGE TOP */
+.page-top{
+  padding:8rem 3rem 4rem; border-bottom:1px solid var(--border);
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-end;
+}
+.page-top h1{
+  font-family:'Cormorant',serif;font-weight:300;font-style:italic;
+  font-size:clamp(3.5rem,7vw,6.5rem); line-height:.9;color:var(--ink);letter-spacing:-.01em;
+}
+.page-top h1 em{font-style:normal;font-weight:600;color:var(--accent);}
+.page-subtitle{
+  font-size:.85rem;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--ink4);
+  margin-top:1.25rem;
+  border-left:2px solid var(--accent);
+  padding-left:1.25rem;
+}
+
+/* GRID AND CARDS */
+.grid-layout{padding:4rem 3rem; max-width: 1400px; margin: 0 auto;}
+.cards-grid{
+  display:grid; grid-template-columns: 1fr; gap:4rem; max-width:1000px; margin:0 auto;
+}
+.cert-card{
+  background:var(--card); border:1px solid var(--border); padding:2.5rem;
+  display:flex; flex-direction:column;
+  transition:all .4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.cc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;}
+.cc-icon{font-size:1.5rem;color:var(--accent);}
+.cc-title{font-family:'Cormorant',serif;font-size:1.8rem;font-weight:600;color:var(--ink);line-height:1.2;}
+.cc-date{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink4);margin-top:1.5rem;}
+
+.cc-img-box{
+  width:100%; max-width:560px; aspect-ratio:16/9; background:var(--bg2); margin-top:2rem;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--border); overflow: hidden;
+}
+.cc-img-box img{width:100%;height:100%;object-fit:contain;display:block;}
+.cc-desc{font-size:.9rem;line-height:1.6;color:var(--ink2);margin-top:1.5rem;}
+.cc-analysis{
+  font-size:.82rem;
+  line-height:1.65;
+  color:var(--ink3);
+  margin-top:1rem;
+  max-width:680px;
+}
+.cc-link{
+  display:inline-block; margin-top:1.5rem; font-size:.8rem; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--accent); text-decoration:none;
+  border-bottom:1px solid var(--accent); padding-bottom:.2rem;
+}
+</style>
+</head>
+<body>
+
+<div class="page-bg"></div>
+<div class="noise"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo" aria-label="Home"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="certificates.html">Certificates</a></li>
+    <li><a href="hackathons.html">Hackathons</a></li>
+    <li><a href="coding.html">Coding</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-top">
+  <h1>Coding<em>Profiles</em></h1>
+  <p class="page-subtitle">Competitive programming progress, practice history, and profile snapshots</p>
+</div>
+
+<div class="grid-layout">
+  <div class="cards-grid">
+    
+    <!-- LEETCODE CARD -->
+    <div class="cert-card">
+      <div class="cc-front">
+        <div class="cc-top"><span class="cc-icon">LC</span></div>
+        <div class="cc-title">LeetCode Analytics Dashboard</div>
+        <div class="cc-date">@sanjit_srujan - 227 Days Active</div>
+      </div>
+      <div class="cc-img-box">
+         <img src="leetcode_dark_stats.png" alt="LeetCode Profile">
+      </div>
+      <p class="cc-analysis">The dashboard image makes the strongest point visually: consistent practice, a visible activity streak, and measurable contest progress.</p>
+      <p class="cc-desc">A focused problem-solving profile with steady DSA practice and contest growth. It reflects work across data structures, algorithms, and accuracy-driven preparation.</p>
+      <a href="https://leetcode.com/sanjit_srujan" target="_blank" class="cc-link">Explore Live Profile &rarr;</a>
+    </div>
+
+    <!-- CODEFORCES CARD -->
+    <div class="cert-card">
+      <div class="cc-front">
+        <div class="cc-top"><span class="cc-icon">CF</span></div>
+        <div class="cc-title">Codeforces Profile Analytics</div>
+        <div class="cc-date">@sanjit_srujan - Contributor</div>
+      </div>
+      <div class="cc-img-box">
+         <img src="codeforces_profile.png" alt="Codeforces Profile">
+      </div>
+      <p class="cc-analysis">The screenshot works as compact profile proof, showing the handle, participation history, and competitive programming footprint.</p>
+      <p class="cc-desc">A competitive programming profile centered on contest participation, problem-solving speed, and continued algorithmic growth.</p>
+      <a href="https://codeforces.com/profile/sanjit_srujan" target="_blank" class="cc-link">Explore Live Profile &rarr;</a>
+    </div>
+    
+  </div>
+</div>
+
+</body>
+</html>
+
+

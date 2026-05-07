@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects &mdash; Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Bebas+Neue&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --bg:        #0d0e10;
+  --bg2:       #282728;
+  --card:      #111214;
+  --border:    #4f5052;
+  --border2:   #818283;
+  --ink:       #f8fafa;
+  --ink2:      #c5c6c8;
+  --ink3:      #a0a0a0;
+  --ink4:      #818283;
+  --highlight: #1a1b1d;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{font-size:16px;}
+body{
+  background:transparent; color:var(--ink); font-family:'Jost',sans-serif;
+  font-weight:300; min-height:100vh; overflow-x:hidden;
+}
+
+/* BACKGROUND GLOW */
+.page-bg {
+  position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  background:
+    radial-gradient(ellipse 70% 90% at 70% 50%, rgba(79, 80, 82, .15) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 70% at 20% 80%, rgba(79, 80, 82, .1) 0%, transparent 60%);
+  background-color: var(--bg);
+}
+.noise {
+  position: fixed; inset: 0; opacity: .04; pointer-events: none; z-index: -1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 2rem 4rem; background: linear-gradient(to bottom, rgba(13, 14, 16, .9), transparent);
+  border: none;
+}
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: .15em;
+  color: var(--ink); text-decoration: none; font-weight: normal; text-transform: uppercase;
+}
+.nav-links {
+  display: flex; gap: 3rem; list-style: none; border: none;
+}
+.nav-links a {
+  color: var(--ink2); text-decoration: none; font-size: .85rem;
+  letter-spacing: .2em; text-transform: uppercase; transition: color .3s;
+}
+.nav-links a:hover {
+  color: var(--ink); background: transparent;
+}
+
+/* PAGE TOP */
+.page-top{
+  padding:8rem 3rem 4rem; border-bottom:1px solid var(--border);
+  display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-end;
+}
+.page-top h1{
+  font-family:'Cormorant',serif;font-weight:300;font-style:italic;
+  font-size:clamp(3.5rem,7vw,6.5rem); line-height:.9;color:var(--ink);letter-spacing:-.01em;
+}
+.page-top h1 em{font-style:normal;font-weight:600;color:#8b1a2f;}
+.page-subtitle{
+  font-size:.85rem;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--ink4);
+  margin-top:1.25rem;
+  border-left:2px solid #8b1a2f;
+  padding-left:1.25rem;
+}
+
+/* GRID AND CARDS */
+.grid-layout{padding:4rem 3rem; max-width: 1400px; margin: 0 auto;}
+.cards-grid{
+  display:grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap:2.5rem;
+}
+.cert-card{
+  background:var(--card); border:1px solid var(--border); padding:1.5rem;
+  display:flex; flex-direction:column;
+  width: 100%;
+  transition:all .5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor:pointer;
+  overflow: hidden;
+}
+.cert-card:hover{
+  background:var(--highlight);
+  transform: translateY(-5px);
+  box-shadow:0 30px 60px rgba(0,0,0,0.12); border-color:var(--ink3);
+  z-index: 10;
+}
+.cc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;}
+.cc-icon{font-size:1.5rem;color:var(--ink3);}
+.cc-issuer{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink4);margin-bottom:.5rem;}
+.cc-title{font-family:'Cormorant',serif;font-size:1.3rem;font-weight:600;color:var(--ink);line-height:1.2;}
+.cc-date{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ink4);margin-top:1.5rem;}
+
+.cc-expand{
+  display:block;
+}
+.cert-card:hover .cc-expand{display:block;}
+.cc-expand-inner{overflow:visible;}
+
+.cc-img-box{
+  width:100%; aspect-ratio:16/9; background:var(--bg2); margin:0 0 1.5rem;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--border);
+  overflow: hidden;
+}
+.cc-img-box img{width:100%;height:100%;object-fit:contain; transition: opacity .5s;}
+.cert-card:hover .cc-img-box img { opacity: 1; }
+.cc-desc{font-size:.8rem;line-height:1.6;color:var(--ink2);margin-top:1.2rem;}
+.cc-link{
+  display:inline-block; margin-top:1rem; font-size:.75rem; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--ink); text-decoration:none;
+  border-bottom:1px solid var(--ink); padding-bottom:.2rem;
+}
+</style>
+</head>
+<body>
+
+<!-- GLOBAL BACKGROUND -->
+<div class="page-bg"></div>
+<div class="noise"></div>
+
+<nav>
+  <a href="index.html" class="nav-logo" aria-label="Home"></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="certificates.html">Certificates</a></li>
+    <li><a href="hackathons.html">Hackathons</a></li>
+    <li><a href="coding.html">Coding</a></li>
+    <li><a href="projects.html">Projects</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page-top">
+  <h1>Pro<em>jects</em></h1>
+  <p class="page-subtitle">Selected builds with screenshots, purpose, and live links</p>
+</div>
+
+<div class="grid-layout">
+  <div class="cards-grid">
+    
+    <!-- CARD 1: WASTE WISE -->
+    <div class="cert-card" onclick="window.open('https://sanjit2505.github.io/Waste-Wise/', '_blank')">
+      <div class="cc-img-box">
+         <img src="Screenshot 2026-05-01 145639.png" alt="Waste Wise App">
+      </div>
+      <div class="cc-front">
+        <div class="cc-top"><span class="cc-icon">&#9671;</span></div>
+        <div class="cc-issuer">HTML, CSS, JavaScript</div>
+        <div class="cc-title">Waste Wise</div>
+        <div class="cc-date">2024</div>
+      </div>
+      <div class="cc-expand">
+        <div class="cc-expand-inner">
+          <p class="cc-desc">An interactive web application providing comprehensive guides on recycling, waste segregation, and sustainable living practices. Designed with a clean interface to encourage environmental responsibility.</p>
+          <a href="https://sanjit2505.github.io/Waste-Wise/" target="_blank" class="cc-link">Live Demo &nearr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 2: CROPZ -->
+    <div class="cert-card" onclick="window.open('https://sanjit2505.github.io/CropZ/', '_blank')">
+      <div class="cc-img-box">
+         <img src="Screenshot 2026-05-01 145744.png" alt="CropZ AI Tool">
+      </div>
+      <div class="cc-front">
+        <div class="cc-top"><span class="cc-icon">&#9671;</span></div>
+        <div class="cc-issuer">AI, Python, Data Science</div>
+        <div class="cc-title">CropZ</div>
+        <div class="cc-date">2024</div>
+      </div>
+      <div class="cc-expand">
+        <div class="cc-expand-inner">
+          <p class="cc-desc">A specialized AI tool designed to empower farmers with data-driven insights. It provides precise recommendations on identifying the ideal crop for specific soil types and climates at the optimal time.</p>
+          <a href="https://sanjit2505.github.io/CropZ/" target="_blank" class="cc-link">Live Demo &nearr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD 3: SMART SPHERE -->
+    <div class="cert-card" onclick="window.open('https://sanjit2505.github.io/SmartSphere/index.html', '_blank')">
+      <div class="cc-img-box">
+         <img src="Screenshot 2026-05-01 214910.png" alt="Smart Sphere App">
+      </div>
+      <div class="cc-front">
+        <div class="cc-top"><span class="cc-icon">&#9671;</span></div>
+        <div class="cc-issuer">HTML, CSS, Web Portal</div>
+        <div class="cc-title">Smart Sphere</div>
+        <div class="cc-date">2024</div>
+      </div>
+      <div class="cc-expand">
+        <div class="cc-expand-inner">
+          <p class="cc-desc">A comprehensive citizen-centric platform designed to bridge the gap between public services and the community. Smart Sphere provides a centralized hub for all essential data, resources, and tools needed for daily urban life.</p>
+          <a href="https://sanjit2505.github.io/SmartSphere/index.html" target="_blank" class="cc-link">Live Demo &nearr;</a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+</body>
+</html>

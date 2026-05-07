@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hackathons — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Bebas+Neue&family=Jost:wght@200;300;400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0e10;
+      --bg2: #282728;
+      --card: #111214;
+      --border: #4f5052;
+      --border2: #818283;
+      --ink: #f8fafa;
+      --ink2: #c5c6c8;
+      --ink3: #a0a0a0;
+      --ink4: #818283;
+      --highlight: #1a1b1d;
+      --accent: #8b1a2f;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: var(--ink);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform .1s, opacity .3s;
+    }
+
+    .cursor-follower {
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform .3s ease;
+    }
+
+    /* BACKGROUND GLOW */
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse 70% 90% at 70% 50%, rgba(139, 26, 47, .05) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 70% at 20% 80%, rgba(139, 26, 47, .03) 0%, transparent 60%);
+      background-color: var(--bg);
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      opacity: .03;
+      pointer-events: none;
+      z-index: -1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 4rem;
+      background: linear-gradient(to bottom, rgba(13, 14, 16, .9), transparent);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: .15em;
+      color: var(--ink);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--ink2);
+      text-decoration: none;
+      font-size: .8rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      transition: color .3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    /* PAGE TOP */
+    .page-header {
+      padding: 10rem 4rem 4rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .page-header h1 {
+      font-family: 'Cormorant', serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 1;
+      color: var(--ink);
+      letter-spacing: -.02em;
+    }
+
+    .page-header h1 em {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .page-subtitle {
+      font-size: .85rem;
+      letter-spacing: .4em;
+      text-transform: uppercase;
+      color: var(--ink4);
+      margin-top: 1rem;
+      border-left: 2px solid var(--accent);
+      padding-left: 1.5rem;
+    }
+
+    /* GRID AND CARDS */
+    .grid-container {
+      padding: 0 4rem 8rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .event-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: all .5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+
+    .event-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .event-card:hover {
+      background: var(--highlight);
+      border-color: rgba(139, 26, 47, 0.3);
+      transform: translateY(-10px);
+    }
+
+    .event-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .ec-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .ec-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--bg2);
+    }
+
+    .ec-tag {
+      font-size: .65rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .ec-issuer {
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--ink4);
+      margin-bottom: .8rem;
+    }
+
+    .ec-title {
+      font-family: 'Cormorant', serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+    }
+
+    .ec-img-preview {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg2);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: border-color .3s;
+    }
+
+    .ec-analysis {
+      margin-top: 1rem;
+      color: var(--ink2);
+      font-size: .86rem;
+      line-height: 1.65;
+    }
+
+    .ec-img-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      opacity: 1;
+      transition: all .5s;
+      filter: none;
+    }
+
+    .event-card:hover .ec-img-preview img {
+      opacity: 1;
+    }
+
+    .event-card:hover .ec-img-preview {
+      border-color: var(--accent);
+    }
+
+    .ec-footer {
+      margin-top: auto;
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ec-date {
+      font-size: .7rem;
+      letter-spacing: .1em;
+      color: var(--ink4);
+    }
+
+    .ec-view-btn {
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+    }
+
+    /* MODAL / POP UP */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 14, 16, 0.95);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .5s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-content {
+      width: 90%;
+      max-width: 1100px;
+      height: 85vh;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      transform: translateY(30px);
+      transition: transform .5s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+
+    .modal-img-side {
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      border-right: 1px solid var(--border);
+    }
+
+    .modal-img-side img {
+      max-width: 100%;
+      max-height: 100%;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-info-side {
+      padding: 4rem;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      background: none;
+      border: none;
+      color: var(--ink2);
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: color .3s;
+      z-index: 10;
+    }
+
+    .modal-close:hover {
+      color: var(--accent);
+    }
+
+    .m-issuer {
+      font-size: .8rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .m-title {
+      font-family: 'Cormorant', serif;
+      font-size: 3rem;
+      font-weight: 600;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+
+    .m-desc {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--ink2);
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .m-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      border-top: 1px solid var(--border);
+      padding-top: 2rem;
+    }
+
+    .det-item span {
+      display: block;
+      font-size: .65rem;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      color: var(--ink4);
+      margin-bottom: .5rem;
+    }
+
+    .det-item p {
+      font-size: .9rem;
+      color: var(--ink);
+    }
+
+    .m-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 1.5rem;
+      padding-top: 3rem;
+    }
+
+    .m-btn {
+      padding: 1rem 2rem;
+      font-size: .7rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      transition: all .3s;
+    }
+
+    .m-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .m-btn:hover {
+      border-color: var(--ink);
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 900px) {
+      .modal-content {
+        grid-template-columns: 1fr;
+        height: 95vh;
+        overflow-y: auto;
+      }
+
+      .modal-img-side {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        min-height: 300px;
+      }
+
+      .modal-info-side {
+        padding: 2.5rem;
+      }
+
+      .m-title {
+        font-size: 2rem;
+      }
+
+      nav {
+        padding: 1.5rem 2rem;
+      }
+
+      .page-header {
+        padding: 8rem 2rem 3rem;
+      }
+
+      .grid-container {
+        padding: 0 2rem 5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+  <div class="page-bg"></div>
+  <div class="noise"></div>
+
+  <nav>
+    <a href="index.html" class="nav-logo" aria-label="Home"></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="certificates.html">Certificates</a></li>
+      <li><a href="hackathons.html" class="active">Hackathons</a></li>
+      <li><a href="coding.html">Coding</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-header">
+    <h1>Hack<em>athons</em> & Events</h1>
+    <p class="page-subtitle">Competitive building, problem solving, and global challenges</p>
+  </header>
+
+  <main class="grid-container">
+    <div class="events-grid">
+
+      <!-- EVENT 1: UNESCO -->
+      <div class="event-card" data-id="unesco">
+        <div class="ec-top">
+          <span class="ec-num">01</span>
+          <span class="ec-tag">Global Gold</span>
+        </div>
+        <div class="ec-issuer">UNESCO</div>
+        <div class="ec-title">Youth Hackathon 2025</div>
+        <div class="ec-img-preview"><img src="UNESCO.png" alt="UNESCO Hackathon"></div>
+        <p class="ec-analysis">The certificate image presents an international hackathon achievement with strong global recognition.</p>
+        <div class="ec-footer">
+          <span class="ec-date">Oct 2025</span>
+          <span class="ec-view-btn">Full Details ↗</span>
+        </div>
+      </div>
+
+      <!-- EVENT 2: EY -->
+      <div class="event-card" data-id="ey">
+        <div class="ec-top">
+          <span class="ec-num">02</span>
+          <span class="ec-tag">Corporate Tech</span>
+        </div>
+        <div class="ec-issuer">Ernst & Young</div>
+        <div class="ec-title">EY Techathon — Future Ready</div>
+        <div class="ec-img-preview"><img src="ey techathon 1.jpg" alt="EY Techathon"></div>
+        <p class="ec-analysis">A corporate techathon credential that points to business problem solving, analytics, and future-ready ideas.</p>
+        <div class="ec-footer">
+          <span class="ec-date">2025</span>
+          <span class="ec-view-btn">Full Details ↗</span>
+        </div>
+      </div>
+
+      <!-- EVENT 3: YUKTA -->
+      <div class="event-card" data-id="yukta">
+        <div class="ec-top">
+          <span class="ec-num">03</span>
+          <span class="ec-tag">Symposium</span>
+        </div>
+        <div class="ec-issuer">PSG iTech</div>
+        <div class="ec-title">Yukta 2025 — Tech Meet</div>
+        <div class="ec-img-preview"><img src="psg itech(yukta).jpg" alt="Yukta 2025"></div>
+        <p class="ec-analysis">The event image captures technical symposium participation and competitive college-level problem solving.</p>
+        <div class="ec-footer">
+          <span class="ec-date">2025</span>
+          <span class="ec-view-btn">Full Details ↗</span>
+        </div>
+      </div>
+
+      <!-- EVENT 4: AURELION -->
+      <div class="event-card" data-id="aurelion">
+        <div class="ec-top">
+          <span class="ec-num">04</span>
+          <span class="ec-tag">Design & Build</span>
+        </div>
+        <div class="ec-issuer">Karunya University</div>
+        <div class="ec-title">Aurelion 2025</div>
+        <div class="ec-img-preview"><img src="karunya(aurelion).jpg" alt="Aurelion 2025"></div>
+        <p class="ec-analysis">A build-focused engineering meet credential connected to prototypes, design thinking, and implementation.</p>
+        <div class="ec-footer">
+          <span class="ec-date">2025</span>
+          <span class="ec-view-btn">Full Details ↗</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MODAL STRUCTURE -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div class="modal-img-side">
+        <img src="" alt="Event Full View" id="modalImg">
+      </div>
+      <div class="modal-info-side">
+        <div class="m-issuer" id="modalIssuer">Issuer Name</div>
+        <h2 class="m-title" id="modalTitle">Event Title</h2>
+        <p class="m-desc" id="modalDesc">Detailed summary of the competition experience.</p>
+
+        <div class="m-details">
+          <div class="det-item"><span>Date</span>
+            <p id="modalDate">Jan 2024</p>
+          </div>
+          <div class="det-item"><span>Location</span>
+            <p id="modalLoc">Global</p>
+          </div>
+        </div>
+
+        <div class="m-actions">
+          <a href="#" class="m-btn primary">Participated</a>
+          <a href="#" class="m-btn" id="mActionBtn">Explore Sub-Page ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const eventData = {
+      'unesco': {
+        title: 'UNESCO Youth Hackathon 2025',
+        issuer: 'UNESCO',
+        date: 'Oct 24, 2025',
+        loc: 'Colombia / Global',
+        desc: 'Participated as a key innovator in the UNESCO Youth Hackathon. Developed MIL-based solutions focusing on "Youth Leading the Way" to address global information literacy challenges.',
+        img: 'UNESCO.png',
+        url: 'unesco.html'
+      },
+      'ey': {
+        title: 'EY Techathon — Future Ready',
+        issuer: 'Ernst & Young',
+        date: '2025',
+        loc: 'Corporate Finals',
+        desc: 'Competed in one of the most rigorous corporate techathons, focusing on building scalable business intelligence tools and predictive analytics.',
+        img: 'ey techathon 1.jpg',
+        url: 'ey.html'
+      },
+      'yukta': {
+        title: 'Yukta 2025 Technical Symposium',
+        issuer: 'PSG iTech',
+        date: '2025',
+        loc: 'Coimbatore, India',
+        desc: 'Demonstrated advanced technical and problem-solving skills at PSG iTech\'s Yukta meet. Engaged in multiple competitive programming and design challenges.',
+        img: 'psg itech(yukta).jpg',
+        url: 'yukta.html'
+      },
+      'aurelion': {
+        title: 'Aurelion 2025',
+        issuer: 'Karunya University',
+        date: '2025',
+        loc: 'Coimbatore, India',
+        desc: 'A national-level engineering competition focusing on sustainable design and innovative hardware/software prototypes.',
+        img: 'karunya(aurelion).jpg',
+        url: 'aurelion.html'
+      }
+    };
+
+    const cursor = document.querySelector('.cursor');
+    const follower = document.querySelector('.cursor-follower');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+      setTimeout(() => { follower.style.left = e.clientX + 'px'; follower.style.top = e.clientY + 'px'; }, 50);
+    });
+
+    const overlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const cards = document.querySelectorAll('.event-card');
+    const mImg = document.getElementById('modalImg');
+    const mTitle = document.getElementById('modalTitle');
+    const mIssuer = document.getElementById('modalIssuer');
+    const mDesc = document.getElementById('modalDesc');
+    const mDate = document.getElementById('modalDate');
+    const mLoc = document.getElementById('modalLoc');
+    const mActionBtn = document.getElementById('mActionBtn');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-id');
+        const data = eventData[id]; if (!data) return;
+        mImg.src = data.img;
+        mTitle.innerText = data.title;
+        mIssuer.innerText = data.issuer;
+        mDesc.innerText = data.desc;
+        mDate.innerText = data.date;
+        mLoc.innerText = data.loc;
+        mActionBtn.href = data.url;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    modalClose.addEventListener('click', () => { overlay.classList.remove('active'); document.body.style.overflow = 'auto'; });
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) { overlay.classList.remove('active'); document.body.style.overflow = 'auto'; } });
+  </script>
+
+</body>
+
+</html>
